@@ -2,8 +2,6 @@ let debug = false;
 let game = true;
 
 
-
-
 let Player = function(x, y, sprite) {
     this.x = x;
     this.y = y;
@@ -18,7 +16,7 @@ Player.prototype.render = function() {
 }
 
 Player.prototype.update = function(dt) {
-
+    // update lives, gems, etc.
 }
 
 // Enemies our player must avoid
@@ -31,6 +29,8 @@ let Enemy = function(x, y) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.height = 65;
+    this.width = 95;
 };
 
 // Update the enemy's position, required method for game
@@ -45,6 +45,18 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+Player.prototype.handleInput = function(input) {
+    if (input === "left") {
+        this.x -= 100;
+    } else if (input === "right") {
+        this.x += 100; 
+    } else if (input === "up") {
+        this.y -= 100;
+    } else if (input === "down") {
+        this.y += 100;
+    }
+}
 
 const allEnemies = enemyPosition.map((y, index) => {
     return new Enemy((-100 * (index + 1)), y);
