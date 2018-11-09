@@ -1,5 +1,30 @@
+let debug = false;
+let game = true;
+
+
+
+
+let Player = function(x, y, sprite) {
+    this.x = x;
+    this.y = y;
+    this.sprite = sprite;
+}
+
+const player = new Player(200, 400, "images/char-cat-girl.png");
+const enemyPosition = [55, 140, 230];
+
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+Player.prototype.update = function(dt) {
+
+}
+
 // Enemies our player must avoid
-var Enemy = function() {
+let Enemy = function(x, y) {
+    this.x = x;
+    this.y = y;
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -20,6 +45,10 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+const allEnemies = enemyPosition.map((y, index) => {
+    return new Enemy((-100 * (index + 1)), y);
+})
 
 // Now write your own player class
 // This class requires an update(), render() and
