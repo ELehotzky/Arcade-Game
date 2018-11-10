@@ -54,9 +54,9 @@ Player.prototype.handleInput = function(input) {
         this.x -= horizontal;
     } else if (input === "right" && (this.x + horizontal < ctx.canvas.width - 100)) {
         this.x += horizontal; 
-    } else if (input === "up" && this.y - vertical > 0 - player.height) {
+    } else if (input === "up" && (this.y - vertical >= -100)) {
         this.y -= vertical;
-    } else if (input === "down" && this.y + vertical < ctx.canvas.height - 100) {
+    } else if (input === "down" && (this.y + vertical < ctx.canvas.height - 200)) {
         this.y += vertical;
     }
 }
