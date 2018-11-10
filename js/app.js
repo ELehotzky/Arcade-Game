@@ -1,4 +1,3 @@
-let debug = false;
 let game = true;
 
 
@@ -6,6 +5,8 @@ let Player = function(x, y, sprite) {
     this.x = x;
     this.y = y;
     this.sprite = sprite;
+    this.height = 50;
+    this.width = 50;
 }
 
 const player = new Player(200, 400, "images/char-cat-girl.png");
@@ -29,8 +30,9 @@ let Enemy = function(x, y) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.height = 65;
-    this.width = 95;
+    this.height = 50;
+    this.width = 50;
+    this.hit = false;
 };
 
 // Update the enemy's position, required method for game
@@ -43,6 +45,17 @@ Enemy.prototype.update = function(dt) {
         this.x = -150 * Math.floor(Math.random() * 4) + 1;
     } else {
         this.x += 150 * dt;
+    }
+
+    // If a bug hits a player, the game sets the player back to start
+    if (hit(player.x, player.y, player.width, player.height, this.x, this.y, this.width, this.height)) {
+        this.hit = true;
+        if (player) {
+            player.x = 200;
+            player.y = 400;
+        }
+    } else {
+        this.hit = false;
     }
 };
 
@@ -75,6 +88,9 @@ console.log(allEnemies);
 // This class requires an update(), render() and
 // a handleInput() method.
 
+function hit(px, py, pw, ph, ex, ey, ew, eh) {
+    return (Math.abs(px - ex) * 2 < (pw + ew) && Math.abs(py - ey) * 2 < (ph + eh))
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
