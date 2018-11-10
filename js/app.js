@@ -39,6 +39,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += 150 * dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -47,20 +48,24 @@ Enemy.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(input) {
-    if (input === "left") {
-        this.x -= 100;
-    } else if (input === "right") {
-        this.x += 100; 
-    } else if (input === "up") {
-        this.y -= 100;
-    } else if (input === "down") {
-        this.y += 100;
+    const horizontal = 100;
+    const vertical = 85;
+    if (input === "left" && (this.x - horizontal >= 0)) {
+        this.x -= horizontal;
+    } else if (input === "right" && (this.x + horizontal < ctx.canvas.width - 100)) {
+        this.x += horizontal; 
+    } else if (input === "up" && this.y - vertical > 0 - player.height) {
+        this.y -= vertical;
+    } else if (input === "down" && this.y + vertical < ctx.canvas.height - 100) {
+        this.y += vertical;
     }
 }
 
 const allEnemies = enemyPosition.map((y, index) => {
     return new Enemy((-100 * (index + 1)), y);
 })
+
+console.log(allEnemies);
 
 // Now write your own player class
 // This class requires an update(), render() and
