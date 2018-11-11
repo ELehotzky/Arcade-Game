@@ -1,3 +1,38 @@
 body {
     text-align: center;
+    background-color: #BEC5AD;
+   	color: #483C46;
+}
+
+/*
+    Styles for winner/game complete banner
+*/
+
+.winner-flag {
+    position: absolute;
+    height: 100%;
+}
+
+.winner-banner {
+    position: relative;
+    z-index: 99;
+    top: 40%;
+    left: 190%;
+    height: 250px;
+    width: 400px;
+    background: #FCB97D;
+    transform: translate(-50%, -70%);
+}
+
+.specs {
+    text-align: center;
+    height: 50%;
+}
+
+.close-banner {
+    float: right;
+}
+
+.close {
+    display: none;
 }

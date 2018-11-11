@@ -1,6 +1,5 @@
 let game = true;
 
-
 // Place the player object in a variable called player
 let Player = function(x, y, sprite) {
     this.x = x;
@@ -17,9 +16,12 @@ const enemyPosition = [55, 140, 230];
 // This class requires an update(), render() and
 // a handleInput() method.
 
-
+// if player reaches water, they win
 Player.prototype.update = function(dt) {
-    // update lives, gems, etc.
+    if (game == true && player.y < 40) {
+        game = false;
+        win();
+    }
 }
 
 Player.prototype.render = function() {
@@ -80,7 +82,7 @@ Enemy.prototype.render = function() {
 };
 
 // Place all enemy objects in an array called allEnemies
-const allEnemies = enemyPosition.map((y, index) => {
+let allEnemies = enemyPosition.map((y, index) => {
     return new Enemy((-100 * (index + 1)), y);
 })
 
@@ -89,6 +91,14 @@ function hit(px, py, pw, ph, ex, ey, ew, eh) {
     return (Math.abs(px - ex) * 2 < (pw + ew) && Math.abs(py - ey) * 2 < (ph + eh))
 }
 
+function win() {
+    restart();
+    banner.classList.remove("close");
+}
+
+function restart() {
+    allEnemies = [];
+}
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -101,3 +111,22 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// if player hasn't won, the message doesn't appear
+const banner = document.getElementsByClassName("winner-flag")[0];
+banner.classList.add("close");
+
+const restartBtn = document.getElementsByClassName("restart")[0];
+
+// reload window/restart game
+restartBtn.addEventListener("click", function(event) {
+    window.location.reload(true);
+})
+
+
+
+
+
+
+
+
